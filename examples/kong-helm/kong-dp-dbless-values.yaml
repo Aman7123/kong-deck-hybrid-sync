@@ -1,0 +1,97 @@
+# -----------------------------------------------------------------------------
+# Deployment parameters
+# -----------------------------------------------------------------------------
+deployment:
+  kong:
+    enabled: true
+  sidecarContainers:
+    - name: deck-sync
+      image: dump-and-sync:4.20
+      env:
+        - name: KONG_CP_ADMIN_URL
+          value: http://kong-cp-kong-admin.kong-cp.svc.cluster.local:8001
+        - name: KONG_CP_ADMIN_TOKEN
+          value: kong
+        - name: DS_DEBUG
+          value: "true"
+        - name: DS_RUN_CRON
+          value: "*/5 * * * *"
+        - name: VERBOSE
+          value: "true"
+
+# -----------------------------------------------------------------------------
+# Kong parameters
+# -----------------------------------------------------------------------------
+# Specify Kong configuration
+env:
+  # log_level: debug
+  proxy_url: http://127.0.0.1.nip.io:8000
+  admin_api_uri: http://127.0.0.1.nip.io:8001
+  admin_gui_url: http://127.0.0.1.nip.io:8002
+  database: "off"
+
+# Specify Kong's Docker image and repository details here
+image:
+  # Kong Enterprise image
+  repository: kong/kong-gateway
+  tag: "2.8.1.2-alpine"
+
+# Specify Kong admin API service and listener configuration
+admin:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: true
+  tls: 
+    enabled: false
+  ingress:
+    enabled: false
+
+# Specify Kong proxy service configuration
+proxy:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: true
+  tls: 
+    enabled: false
+  ingress:
+    enabled: false
+
+# -----------------------------------------------------------------------------
+# Ingress Controller parameters
+# -----------------------------------------------------------------------------
+ingressController:
+  enabled: true
+
+# -----------------------------------------------------------------------------
+# Postgres sub-chart parameters
+# -----------------------------------------------------------------------------
+postgresql:
+  enabled: false
+
+# -----------------------------------------------------------------------------
+# Kong Enterprise parameters
+# -----------------------------------------------------------------------------
+# Toggle Kong Enterprise features on or off
+enterprise:
+  enabled: true
+  license_secret: kong-enterprise-license
+  rbac:
+    enabled: false
+
+manager:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: true
+  tls:
+    enabled: false
+  ingress:
+    enabled: false
+
+portal:
+  enabled: false
+
+portalapi:
+  enabled: false

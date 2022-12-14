@@ -1,0 +1,83 @@
+# -----------------------------------------------------------------------------
+# Kong parameters
+# -----------------------------------------------------------------------------
+# Specify Kong configuration
+env:
+  # log_level: debug
+  proxy_url: http://127.0.0.1.nip.io:8000
+  admin_api_uri: http://127.0.0.1.nip.io:8001
+  admin_gui_url: http://127.0.0.1.nip.io:8002
+  password: kong
+  database: "postgres"
+
+# Specify Kong's Docker image and repository details here
+image:
+  # Kong Enterprise image
+  repository: kong/kong-gateway
+  tag: "2.8.1.2-alpine"
+
+# Specify Kong admin API service and listener configuration
+admin:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: true
+  tls: 
+    enabled: false
+  ingress:
+    enabled: false
+
+# Specify Kong proxy service configuration
+proxy:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: true
+  tls: 
+    enabled: false
+  ingress:
+    enabled: false
+
+# -----------------------------------------------------------------------------
+# Ingress Controller parameters
+# -----------------------------------------------------------------------------
+ingressController:
+  enabled: false
+
+# -----------------------------------------------------------------------------
+# Postgres sub-chart parameters
+# -----------------------------------------------------------------------------
+postgresql:
+  enabled: true
+  auth:
+    username: kong
+    postgresPassword: kong
+    password: kong
+    database: kong
+
+# -----------------------------------------------------------------------------
+# Kong Enterprise parameters
+# -----------------------------------------------------------------------------
+# Toggle Kong Enterprise features on or off
+enterprise:
+  enabled: true
+  license_secret: kong-enterprise-license
+  rbac:
+    enabled: true
+    admin_gui_auth: basic-auth
+
+manager:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: true
+  tls:
+    enabled: false
+  ingress:
+    enabled: false
+
+portal:
+  enabled: false
+
+portalapi:
+  enabled: false

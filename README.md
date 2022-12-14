@@ -2,7 +2,7 @@
 Allows for DB-Less Kong Data Planes with just the Admin API, KIC, and a Proxy to sync with a Control Plane with DB.
 
 ## Overview
-kong-deck-hybrid-sync is a simple way to replicate a unique data plane environment across multiple clusters but using a single read only data plane.
+kong-deck-hybrid-sync is a simple way to replicate a unique data plane environment across multiple clusters to be synced with a central control plane.
 
 It has the following features:
 
@@ -56,5 +56,5 @@ The scheduling options have an order of priority:
 ### Permissions
 By default the container will need the proper `Kong-Admin-Token` header passed as the env var `KONG_CP_ADMIN_TOKEN` for the Control Plane.
 
-### Automated Build
-This github repo is the source for the kong-deck-hybrid-sync. The actual image is stored on the docker hub at `arenner/kong-deck-hybrid-sync`, and is triggered with each commit to the source by automated build via Webhooks.
+### Use Case
+Please see the `examples/` folder for a helm sidecar pattern using the [Kong Helm Chart](https://github.com/Kong/charts)
