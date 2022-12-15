@@ -23,7 +23,8 @@ The following are the environment variables for a backup:
 * `DS_RUN_CRON`: Set the dump schedule using standard [crontab syntax](https://en.wikipedia.org/wiki/Cron), a single line.
 * `VERBOSE`: Enables `set -x` in the script, which prints out every command as it is run. Useful for debugging.
 * `DS_DEBUG`: Enables output of the Kong decK commands. Useful for debugging.
-* `KONG_WORKSPACE`: The workspace to use for dump and sync. The workspace used in the data plane can be set within the KIC environment variables. Must not conflict with the workspace used in the control plane or the sync will overwrite anything in the control plane workspace.
+* `KONG_CP_WORKSPACE`: The workspace used in the remote control plane. Defaults to default.
+* `KONG_DP_WORKSPACE`: The workspace used in the local data plane. Defaults to default.
 * `KONG_DP_ADMIN_URL`: The URL of the data plane admin API. Defaults to using environment variables set by the helm deployment which has to local IP and port of the Admin API used by the data plane.
 * `KONG_CP_ADMIN_URL`: The URL of of the control plane Admin API.
 * `KONG_CP_ADMIN_TOKEN`: If using RBAC on the control plane this should be set to an RBAC user with READ/WRITE access to the workspace set in `KONG_WORKSPACE`.
